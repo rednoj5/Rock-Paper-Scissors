@@ -4,6 +4,10 @@ let result = "";
 let message = "";
 let playerSelection;
 let computerSelection;
+let playerScore = 0;
+let computerScore = 0;
+let winner = "none";
+
 function getComputerChoice() {
     return picks[Math.floor(Math.random() * picks.length)];
 };
@@ -28,7 +32,11 @@ function playRound(playerSelection, computerSelection) {
     } else if (playerSelection === "scissors" && computerSelection === "paper") {
         result = "win";
     } else {result = "error";};
+    
+    return result;
+};
 
+function informOfResult() {
     if (result === "win") {
         message = "You won, fuck yeah!";
     } else if (result === "draw") {
@@ -39,16 +47,38 @@ function playRound(playerSelection, computerSelection) {
         message = "Something went terribly wrong :/";
     };
 
-    return message;
+    alert(message);
+}
+
+function addScore() {
+    if (result === "win") {
+        playerScore++;
+    } else if (result === "loss") {
+        computerScore++;
+    };
 };
+
+function informOfWinner() {
+    if (playerScore > computerScore) {
+        winner = "You've won the whole game!";
+    } else if (playerScore < computerScore) {
+        winner = "You've lost the whole game...";
+    } else if (playerScore === computerScore) {
+        winner = "It's a tie.";
+    };
+
+    alert(winner);
+}
 
 function game() {
     for (i = 0; i < 5; i++) {
         playerSelection = prompt("Rock, Paper, Scissors?").toLowerCase();
         computerSelection = getComputerChoice();
         playRound(playerSelection, computerSelection);
-        alert(message);
+        informOfResult();
+        addScore();
     };
 };
 
 game();
+informOfWinner();
